@@ -1,7 +1,7 @@
 "use server";
 import { decrypt } from "@/app/action";
 import { STEAM_ID_COOKIE } from "@/app/lib/constant";
-import { IAchievement, PlayerStats } from "@/types";
+import { IAchievement, IGlobalAchievementPercentages, PlayerStats } from "@/types";
 import axios from "axios";
 import { cookies } from "next/headers";
 
@@ -27,6 +27,19 @@ export const fetchMyAchievement = async (id: string) => {
       `${process.env.NEXT_PUBLIC_BASE_API_URL}/ISteamUserStats/GetPlayerAchievements/v0001/?appId=${id}&key=${process.env.STEAM_KEY}&steamid=${steamIdKey}`
     );
     return response.data;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+
+export const fetchGlobalAchievementStat = async (id: string) => {
+  try {
+    const response: IGlobalAchievementPercentages = await axios.get(
+      `${process.env.NEXT_PUBLIC_BASE_API_URL}/ISteamUserStats/GetGlobalAchievementPercentagesForApp/v0001/?gameid=${id}&format=json`
+    );
+    return response.data.achievementpercentages;
   } catch (error) {
     console.error(error);
     return null;

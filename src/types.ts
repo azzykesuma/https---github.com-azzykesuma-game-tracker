@@ -67,6 +67,24 @@ export interface PlayerStats  {
   data : {
     playerstats : {
       achievements : PersonalAchievement[]
+      stats: {name : string, value : number}[]
+    }
+    gameName : string;
+    achievements : {name : string, achieved : number}[]
+
+  }
+}
+
+export interface GlobalAchievement {
+  name : string;
+  percent : number;
+}
+export interface IGlobalAchievementPercentages  {
+  data : {
+    achievementpercentages : {
+      achievements : {
+        achievement : GlobalAchievement[]
+      }
     }
     gameName : string;
   }

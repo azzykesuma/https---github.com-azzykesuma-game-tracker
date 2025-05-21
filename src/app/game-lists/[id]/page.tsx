@@ -1,5 +1,5 @@
 import BackButton from "@/components/layout/BackButton";
-import { fetchAchievementLists, fetchMyAchievement } from "./action";
+import { fetchAchievementLists, fetchGlobalAchievementStat, fetchMyAchievement } from "./action";
 import AchievementsLists from "./component/AchievementsLists";
 import ErrorComponent from "./component/ErrorComponent";
 
@@ -7,8 +7,10 @@ const GameDetail = async ({ params }: { params: Promise<{ id: string }> }) => {
   const id = (await params).id;
   const { availableGameStats } = await fetchAchievementLists(Number(id));
   const playerstats = await fetchMyAchievement(id);
-
-  // Handle cases where playerstats or achievements are not available
+  const globalAchievement = await fetchGlobalAchievementStat(id)
+  if (!globalAchievement) {
+    return <ErrorComponent message="Could not load player achievement data." />;
+  }
   if (!playerstats?.playerstats?.achievements) {
     return <ErrorComponent message="Could not load player achievement data." />;
   }
@@ -24,6 +26,12 @@ const GameDetail = async ({ params }: { params: Promise<{ id: string }> }) => {
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white mb-4">
           Achievements
         </h1>
+        <p className="text-lg sm:text-xl text-gray-300 mb-2">
+          Total Achievements:{" "}
+          <span className="font-semibold text-white">
+            {availableGameStats.achievements.length}
+          </span>
+        </p>
         {/* Back Button */}
         <div className="my-5">
           <BackButton />
@@ -35,6 +43,7 @@ const GameDetail = async ({ params }: { params: Promise<{ id: string }> }) => {
         <AchievementsLists
           allAchievements={availableGameStats.achievements}
           myAchievement={playerstats.playerstats.achievements}
+          globalAchievement={globalAchievement.achievements.achievement}
         />
       </div>
     </div>

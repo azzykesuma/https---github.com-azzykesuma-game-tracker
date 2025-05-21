@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { useIsFetching } from "@tanstack/react-query";
-import { Gamepad, Gamepad2Icon } from "lucide-react";
+import { Gamepad, Gamepad2Icon, Trophy } from "lucide-react";
 import { motion as m } from "motion/react";
 import { QUERY_KEYS_MAP } from "../lib/constant";
 
@@ -17,6 +17,12 @@ const buttonConfigs = [
     href: "/recently-played",
     icon: <Gamepad2Icon />,
     id: 2,
+  },
+  {
+    label: "Lifetime Achievement",
+    href: "/lifetime-achievement",
+    icon: <Trophy />,
+    id: 3,
   },
   // {
   //   label: "Set Gaming Schedule",
