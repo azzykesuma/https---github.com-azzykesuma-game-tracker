@@ -47,9 +47,9 @@ export const fetchUserData = async () => {
 export const setCookie = async (name: string, value: string) => {
   const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
   (await cookies()).set(name, value, {
-    httpOnly: true,
+    httpOnly: false,
     secure: true,
-    sameSite: "strict",
+    sameSite: process.env.NODE_ENV === "development" ? "lax" : "strict",
     expires: expiresAt,
   });
 };

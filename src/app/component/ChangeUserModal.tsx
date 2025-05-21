@@ -1,6 +1,6 @@
 'use client'
-import { useForm, SubmitHandler, Controller } from "react-hook-form"
-import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { Button } from "@/components/ui/button";
+
 import {
   Dialog,
   DialogContent,
@@ -8,14 +8,16 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Label } from "@radix-ui/react-label";
-import React from "react";
-import { AnimatePresence, motion as m } from "motion/react";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { encrypt, setCookie } from "../action";
-import { QueryObserverResult, RefetchOptions } from "@tanstack/react-query";
 import { SteamPlayerSummary } from "@/types";
+import { Label } from "@radix-ui/react-label";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { QueryObserverResult, RefetchOptions } from "@tanstack/react-query";
+import { AnimatePresence, motion as m } from "motion/react";
+import React from "react";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { encrypt, setCookie } from "../action";
+import { STEAM_ID_COOKIE } from "../lib/constant";
 
 interface IChangeUserProps {
   open: boolean;
@@ -24,6 +26,7 @@ interface IChangeUserProps {
 }
 
 const ChangeUserModal = ({ open, setOpen, refetch }: IChangeUserProps) => {
+
   const {
     control,
     formState: { errors },
@@ -35,15 +38,18 @@ const ChangeUserModal = ({ open, setOpen, refetch }: IChangeUserProps) => {
     },
   });
 
-  const submit: SubmitHandler<{ steamId: string }> = async(data) => {
-    console.log("Submitted Steam ID:", data);
-    const encryptedSteamId = await encrypt({ steamId: data.steamId })
-    setCookie("steamId", encryptedSteamId);
-    setOpen(false);
-    await refetch();
-    reset();
-  }
 
+  const submit: SubmitHandler<{ steamId: string }> = async (data) => {
+    const { steamId } = data;
+    try {
+      const encryptedSteamId = await encrypt({ steamId });
+      setCookie(STEAM_ID_COOKIE, encryptedSteamId);
+      await refetch();
+      setOpen(false);
+    } catch (error) {
+      console.error("Error updating Steam ID:", error);
+    }
+  }
   // Function to handle modal close and reset form
   const handleOpenChange = (isOpen: boolean) => {
     setOpen(isOpen);

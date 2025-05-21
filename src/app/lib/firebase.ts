@@ -1,7 +1,7 @@
-import { getApps, initializeApp } from "firebase/app";
+import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore/lite";
 
-const firebaseConfig = {
+export const firebaseConfig = {
   apiKey: process.env.API_KEY,
   authDomain: process.env.AUTH_DOMAIN,
   projectId: process.env.PROJECT_ID,
@@ -10,13 +10,6 @@ const firebaseConfig = {
   appId: process.env.APP_ID
 };
 
-let firebaseApp;
+const app = initializeApp(firebaseConfig)
 
-if (!getApps().length) {
-  firebaseApp = initializeApp(firebaseConfig);
-} else {
-  firebaseApp = getApps()[0];
-}
-
-const db = getFirestore(firebaseApp);
-export { db };
+export const db = getFirestore(app)

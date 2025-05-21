@@ -1,5 +1,6 @@
 export const COLLECTIONCONFIG = {
     COLLECTION_NAME: "game",
+    STEAM_ID: "steamId",
 };
 
 export const SESSION_COOKIE = "session";

@@ -16,8 +16,11 @@ const RecentlyPlayed = async () => {
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white mb-8 sm:mb-10 md:mb-12">
           Recently Played Games
         </h1>
-         <div className="my-5">
-          <Link href="/" className="text-blue-400 hover:text-blue-300 transition-colors duration-200 text-lg flex items-center gap-2">
+        <div className="my-5">
+          <Link
+            href="/"
+            className="text-blue-400 hover:text-blue-300 transition-colors duration-200 text-lg flex items-center gap-2"
+          >
             ← Back to Home
           </Link>
         </div>
