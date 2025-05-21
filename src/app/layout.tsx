@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { TanstackProvider } from "./context/TanstackProvider";
+import { ThemeProvider } from "./context/ThemeProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,11 +25,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen w-full gap-3`}
       >
-        {children}
+        <TanstackProvider>
+          <ThemeProvider
+            defaultTheme="dark"
+            attribute={"class"}
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+        </TanstackProvider>
       </body>
     </html>
   );
