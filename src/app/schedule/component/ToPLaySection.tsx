@@ -6,20 +6,10 @@ import ToPlayCard from "./ToPlayCard";
 
 interface IToPlaySectionProps {
   allGamesData: AllGamesData | undefined;
+  data : IDoc['toPlay']
 }
 
-const mockIDocData: IDoc = {
-  id: "1",
-  toPlay: [
-    { gameId: 550, duration: 6 },
-    { gameId: 34330, duration: 12 },
-    { gameId: 281990, duration: 8 },
-    { gameId: 1245620, duration: 4 },
-  ],
-};
-
-const ToPLaySection = ({ allGamesData }: IToPlaySectionProps) => {
-
+const ToPLaySection = ({ allGamesData, data }: IToPlaySectionProps) => {
   const matchedGames = useMemo(() => {
     if (!allGamesData?.games) return [];
 
@@ -27,9 +17,8 @@ const ToPLaySection = ({ allGamesData }: IToPlaySectionProps) => {
       allGamesData.games.map((game) => [game.appid, game])
     );
 
-    const foundGames = mockIDocData.toPlay
-      .map((toPlayGame) => {
-        const gameInfo = gamesMap.get(toPlayGame.gameId);
+    const foundGames = data.map((toPlayGame) => {
+        const gameInfo = gamesMap.get(+toPlayGame.gameId);
         if (gameInfo) {
           return {
             ...toPlayGame,
@@ -40,8 +29,10 @@ const ToPLaySection = ({ allGamesData }: IToPlaySectionProps) => {
       })
       .filter(Boolean);
 
+
     return foundGames;
-  }, [allGamesData]);
+  }, [allGamesData?.games, data]);
+
 
   return (
     <section className="bg-gray-800 p-8 rounded-xl shadow-2xl border-b-4 border-r-4 border-gray-700">

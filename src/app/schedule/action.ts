@@ -4,11 +4,10 @@ import {
   getDoc,
   updateDoc
 } from "firebase/firestore/lite";
-import { COLLECTIONCONFIG } from "../lib/constant";
 import { revalidatePath } from "next/cache";
+import { COLLECTIONCONFIG } from "../lib/constant";
 
-// Method 1: Fetch specific document by ID (RECOMMENDED)
-export const fetchGameCollectionData = async (db: Firestore) => {
+export const fetchToPlayData = async (db: Firestore) => {
   if (!db) {
     console.error("Firestore DB instance is not initialized.");
     return [];
@@ -20,8 +19,7 @@ export const fetchGameCollectionData = async (db: Firestore) => {
     const docSnapshot = await getDoc(toPlayDocRef);
     
     if (docSnapshot.exists()) {
-      console.log(`${docSnapshot.id} => `, docSnapshot.data());
-      return docSnapshot.data().toPlay || []; // Assuming the field is called 'toPlay'
+      return docSnapshot.data().toPlay || [];
     } else {
       console.log("No such document!");
       return [];
@@ -45,7 +43,6 @@ export const fetchCurrentlyPlaying = async (db: Firestore) => {
     const docSnapshot = await getDoc(currentlyPlayingDocRef);
     
     if (docSnapshot.exists()) {
-      console.log(`${docSnapshot.id} => `, docSnapshot.data());
       return docSnapshot.data().currentlyPlaying || [];
     } else {
       console.log("No such document!");
@@ -80,3 +77,4 @@ export const updateCurrentlyPlaying = async (db: Firestore, gameId: string) => {
     return false;
   }
 };
+

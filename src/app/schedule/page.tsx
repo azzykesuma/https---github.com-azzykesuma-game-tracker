@@ -1,12 +1,12 @@
 import BackButton from "@/components/layout/BackButton";
 import InnerLayout from "@/components/layout/InnerLayout";
-import { db } from "../lib/firebase";
-import { fetchCurrentlyPlaying, fetchGameCollectionData, updateCurrentlyPlaying } from "./action";
 import { IDoc } from "@/types";
+import { db } from "../lib/firebase";
+import { fetchCurrentlyPlaying, fetchToPlayData, updateCurrentlyPlaying } from "./action";
 import SchedulePlay from "./component/SchedulePlay";
 
 const Schedule = async () => {
-  const data = (await fetchGameCollectionData(db)) as IDoc;
+  const data = (await fetchToPlayData(db)) as IDoc['toPlay'];
   const currentlyPLaying = (await fetchCurrentlyPlaying(db)) as {gameId: string};
 
   const update = async (gameId: string) => {
