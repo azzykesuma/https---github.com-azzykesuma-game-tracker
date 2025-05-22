@@ -5,9 +5,10 @@ import ErrorComponent from "./component/ErrorComponent";
 
 const GameDetail = async ({ params }: { params: Promise<{ id: string }> }) => {
   const id = (await params).id;
-  const { availableGameStats } = await fetchAchievementLists(Number(id));
+  const data = await fetchAchievementLists(Number(id));
   const playerstats = await fetchMyAchievement(id);
   const globalAchievement = await fetchGlobalAchievementStat(id)
+
   if (!globalAchievement) {
     return <ErrorComponent message="Could not load player achievement data." />;
   }
@@ -15,7 +16,7 @@ const GameDetail = async ({ params }: { params: Promise<{ id: string }> }) => {
     return <ErrorComponent message="Could not load player achievement data." />;
   }
 
-  if (!availableGameStats?.achievements) {
+  if (!data.availableGameStats) {
     return <ErrorComponent message="No achievements found for this game." />;
   }
 
@@ -29,7 +30,7 @@ const GameDetail = async ({ params }: { params: Promise<{ id: string }> }) => {
         <p className="text-lg sm:text-xl text-gray-300 mb-2">
           Total Achievements:{" "}
           <span className="font-semibold text-white">
-            {availableGameStats.achievements.length}
+            {data.availableGameStats.achievements.length}
           </span>
         </p>
         {/* Back Button */}
@@ -41,7 +42,7 @@ const GameDetail = async ({ params }: { params: Promise<{ id: string }> }) => {
       {/* Achievements List Section */}
       <div className="max-w-6xl mx-auto">
         <AchievementsLists
-          allAchievements={availableGameStats.achievements}
+          allAchievements={data.availableGameStats.achievements}
           myAchievement={playerstats.playerstats.achievements}
           globalAchievement={globalAchievement.achievements.achievement}
         />

@@ -10,7 +10,7 @@ const GameCard = ({ game }: { game: IGames }) => {
         <Image
           src={`http://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg`}
           alt={`Icon for game - ${game.name}`}
-          width={64} // Slightly larger for this layout, adjust as needed
+          width={64}
           height={64}
           className="bg-gray-700"
         />

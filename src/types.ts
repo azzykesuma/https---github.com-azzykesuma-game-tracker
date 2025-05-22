@@ -16,6 +16,13 @@ export interface SteamPlayerSummary {
   personastateflags: number;
 }
 
+export interface ISteamAvatar {
+  avatar : {
+    image_small: string;
+    image_large: string;
+  }
+}
+
 export interface IGames {
   appid: number
   name: string
@@ -98,3 +105,23 @@ export interface IRecentlyPlayed {
     }
   }
 }
+
+export interface IDoc {
+  id : string;
+  toPlay : {
+    gameId : number,
+    duration : number
+  }[]
+}
+
+
+export interface GameItem {
+  appid: number;
+  name: string;
+  img_icon_url?: string;
+}
+
+export interface AllGamesData {
+  games: GameItem[];
+}
+

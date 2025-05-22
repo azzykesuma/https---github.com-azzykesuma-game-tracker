@@ -1,5 +1,5 @@
 "use server";
-import { SteamPlayerSummary } from "@/types";
+import { ISteamAvatar, SteamPlayerSummary } from "@/types";
 import axios from "axios";
 import * as jose from "jose";
 import { cookies } from "next/headers";
@@ -43,6 +43,65 @@ export const fetchUserData = async () => {
   }
   return result;
 };
+
+export const fetchUserAvatar = async () => {
+  const steamIdCookies =  (await cookies()).get(STEAM_ID_COOKIE);
+  let steamId;
+
+  if (!steamIdCookies) {
+    steamId = process.env.MY_ID
+  } else {
+    const id = await decrypt(steamIdCookies?.value);
+    steamId = id?.steamId
+  }
+
+
+  const response = await axios.get(
+    `${process.env.NEXT_PUBLIC_BASE_API_URL}/IPlayerService/GetAnimatedAvatar/v1/?key=${process.env.STEAM_KEY}&steamid=${steamId}`
+  );
+  const result = response.data.response.avatar as ISteamAvatar['avatar']
+  return result;
+};
+
+export const fetchUserAvatarFrame = async () => {
+  const steamIdCookies =  (await cookies()).get(STEAM_ID_COOKIE);
+  let steamId;
+
+  if (!steamIdCookies) {
+    steamId = process.env.MY_ID
+  } else {
+    const id = await decrypt(steamIdCookies?.value);
+    steamId = id?.steamId
+  }
+
+
+  const response = await axios.get(
+    `${process.env.NEXT_PUBLIC_BASE_API_URL}/IPlayerService/GetAvatarFrame/v1/?key=${process.env.STEAM_KEY}&steamid=${steamId}`
+  );
+  const result = response.data.response.avatar_frame as ISteamAvatar['avatar']
+  return result;
+};
+
+export const fetchUserBackground = async () => {
+  const steamIdCookies =  (await cookies()).get(STEAM_ID_COOKIE);
+  let steamId;
+
+  if (!steamIdCookies) {
+    steamId = process.env.MY_ID
+  } else {
+    const id = await decrypt(steamIdCookies?.value);
+    steamId = id?.steamId
+  }
+
+
+  const response = await axios.get(
+    `${process.env.NEXT_PUBLIC_BASE_API_URL}/IPlayerService/GetProfileBackground/v1/?key=${process.env.STEAM_KEY}&steamid=${steamId}`
+  );
+  const result = response.data.response.profile_background.image_large as string
+  return result;
+};
+
+
 
 export const setCookie = async (name: string, value: string) => {
   const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
