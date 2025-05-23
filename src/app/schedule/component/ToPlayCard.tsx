@@ -1,10 +1,14 @@
-'use client'
+"use client";
 import { Button } from "@/components/ui/button";
 import { GameItem } from "@/types";
 import { Pencil, Trash2 } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import ToPlayModal from "./ToPlayModal";
+import { ConfirmationModal } from "@/app/component/ConfirmationModal";
+import { deleteToPlayGame } from "../service/update";
+import { useMutation } from "@tanstack/react-query";
+import { LoadingModal } from "./Modal/LoadingModal";
 
 const ToPlayCard = ({
   game,
@@ -16,10 +20,16 @@ const ToPlayCard = ({
   } | null;
 }) => {
   const [openModal, setOpenModal] = useState(false);
+  const [openConfirmation, setOpenConfirmation] = useState(false);
 
-  const handleEdit = () => {
-    setOpenModal(true);
-  }
+  const { mutate, isPending } = useMutation({
+    mutationFn: (id: number) => deleteToPlayGame(id),
+  });
+
+  const handleDeleteToPLay = async (id: number) => {
+    mutate(id);
+  };
+
   if (!game) {
     return null;
   }
@@ -31,7 +41,7 @@ const ToPlayCard = ({
         className="relative bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-xl shadow-2xl
                   border-2 border-yellow-500 transform transition-all duration-300
                   hover:scale-105 hover:shadow-yellow-700/50 cursor-pointer
-                  overflow-hidden h-[200px] group"
+                  overflow-hidden h-[250px] group"
       >
         <div
           className="absolute -top-4 -right-4 w-20 h-20 rounded-full p-1 bg-gradient-to-br from-yellow-400 to-orange-500
@@ -59,9 +69,10 @@ const ToPlayCard = ({
             Play
           </p>
         </div>
+
         <div className="flex space-x-2">
           <Button
-            onClick={handleEdit}
+            onClick={() => setOpenModal(true)}
             className="bg-blue-600 hover:bg-blue-70 h-[40px] w-[40px] text-white rounded-full shadow-md
                       transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75"
             aria-label="Edit game"
@@ -69,6 +80,7 @@ const ToPlayCard = ({
             <Pencil size={18} />
           </Button>
           <Button
+            onClick={() => setOpenConfirmation(true)}
             className=" h-[40px] w-[40px] bg-red-600 hover:bg-red-700 text-white rounded-full shadow-md
                       transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-75"
             aria-label="Delete game"
@@ -77,7 +89,20 @@ const ToPlayCard = ({
           </Button>
         </div>
       </div>
-      <ToPlayModal data={game} isEdit={true} open={openModal} setOpen={setOpenModal} />
+      <ToPlayModal
+        data={game}
+        isEdit={true}
+        open={openModal}
+        setOpen={setOpenModal}
+      />
+      <ConfirmationModal
+        description={`Are you sure you want to delete ${game.gameInfo.name} game from to play list?`}
+        title="Delete Game"
+        isOpen={openConfirmation}
+        onClose={() => setOpenConfirmation(false)}
+        onConfirm={() => handleDeleteToPLay(game.gameId)}
+      />
+      <LoadingModal isOpen={isPending} message="Deleting Game" />
     </>
   );
 };

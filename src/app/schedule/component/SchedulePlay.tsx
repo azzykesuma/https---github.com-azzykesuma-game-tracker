@@ -8,7 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { X } from "lucide-react";
 import { useMemo, useState } from "react";
 import CurrentlyPlayingSection from "./CurrentlyPlayingSection";
-import GameSelectionModal from "./GameSelectionModal";
+import GameSelectionModal from "./Modal/GameSelectionModal";
 import ToPLaySection from "./ToPLaySection";
 
 interface ISchedulePlayProps {
@@ -73,7 +73,7 @@ const SchedulePlay = ({ currentlyPLaying, update, data }: ISchedulePlayProps) =>
         </Button>
       </div>
       <CurrentlyPlayingSection currentlyPlayingGame={currentlyPlayingGame} />
-      <ToPLaySection data={data} allGamesData={allGamesData} />
+      <ToPLaySection data={data} allGamesData={allGamesData} currentlyPlayingId={currentlyPlayingGame?.appid} />
       {allGamesData && (
         <GameSelectionModal
           gameLists={allGamesData?.games}
