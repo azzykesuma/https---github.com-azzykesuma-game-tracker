@@ -1,3 +1,4 @@
+'use client'
 import { GameItem } from '@/types'
 import { Play, Star } from 'lucide-react'
 import Image from 'next/image'
@@ -7,8 +8,8 @@ const CurrentlyPlayingSection = ({currentlyPlayingGame} : {currentlyPlayingGame:
   return (
       <section className="mb-12 bg-gradient-to-br from-purple-900 to-indigo-900 p-8 rounded-xl shadow-2xl border-b-4 border-r-4 border-purple-700 relative overflow-hidden">
         <div className="absolute inset-0 bg-pattern opacity-10 pointer-events-none"></div>
-        <h2 className="text-4xl font-bold text-yellow-400 mb-6 flex items-center drop-shadow-[0_0_8px_rgba(255,255,0,0.5)]">
-          <Play className="mr-4 text-5xl" /> Currently Playing
+        <h2 className="text-2xl md:text-4xl font-bold text-yellow-400 mb-6 flex items-center drop-shadow-[0_0_8px_rgba(255,255,0,0.5)]">
+          <Play className="mr-4 text-lg md:text-5xl" /> Currently Playing
         </h2>
         {currentlyPlayingGame?.appid ? (
           <div className="flex flex-col md:flex-row items-center bg-gray-800 rounded-lg p-6 shadow-lg border border-gray-700">
@@ -20,10 +21,10 @@ const CurrentlyPlayingSection = ({currentlyPlayingGame} : {currentlyPlayingGame:
               height={96}
             />
             <div className="text-center md:text-left">
-              <h3 className="text-3xl font-extrabold text-white mb-2">
+              <h3 className="text-lg md:text-3xl font-extrabold text-white mb-2">
                 {currentlyPlayingGame.name}
               </h3>
-              <p className="text-green-400 text-xl mt-3 font-semibold flex items-center justify-center md:justify-start">
+              <p className="text-green-400 md:text-xl mt-3 font-semibold flex items-center justify-center md:justify-start">
                 <Star className="mr-2 animate-pulse" /> Playing Now!
               </p>
             </div>

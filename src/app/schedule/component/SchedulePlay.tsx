@@ -55,10 +55,10 @@ const SchedulePlay = ({ currentlyPLaying, update, data }: ISchedulePlayProps) =>
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black text-gray-100 p-6 font-sans">
-      <h1 className="text-5xl md:text-6xl font-extrabold text-center mb-12 text-teal-400 drop-shadow-[0_0_15px_rgba(0,255,255,0.6)] uppercase tracking-wide">
+      <h1 className="text-3xl md:text-6xl font-extrabold text-center mb-12 text-teal-400 drop-shadow-[0_0_15px_rgba(0,255,255,0.6)] uppercase tracking-wide">
         My Gaming Hub
       </h1>
-      <div className="w-[200px] mx-auto my-4">
+      <div className="mx-auto my-4 w-full flex justify-center">
         <Button
           onClick={() => setOpen(true)}
           className="rounded-lg font-bold text-xl uppercase tracking-wider

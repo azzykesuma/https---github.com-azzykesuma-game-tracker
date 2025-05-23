@@ -44,7 +44,7 @@ const ToPlayCard = ({
                   overflow-hidden h-[250px] group"
       >
         <div
-          className="absolute -top-4 -right-4 w-20 h-20 rounded-full p-1 bg-gradient-to-br from-yellow-400 to-orange-500
+          className="absolute -top-4 -right-4 w-16 h-16  md:w-20 md:h-20 rounded-full p-1 bg-gradient-to-br from-yellow-400 to-orange-500
                         shadow-lg flex items-center justify-center overflow-hidden z-10
                         transform transition-transform duration-300 group-hover:scale-110"
         >
@@ -61,10 +61,10 @@ const ToPlayCard = ({
 
         {/* Main Content */}
         <div className="relative z-0">
-          <h3 className="text-3xl font-extrabold text-white mb-2 leading-tight drop-shadow-lg pr-12">
+          <h3 className="text-lg md:text-3xl font-extrabold text-white mb-2 leading-tight drop-shadow-lg pr-12">
             {game.gameInfo.name}
           </h3>
-          <p className="text-gray-300 text-lg font-semibold mb-4 border-t border-gray-600 pt-2">
+          <p className="text-gray-300 md:text-lg font-semibold mb-4 border-t border-gray-600 pt-2">
             <span className="text-yellow-400">{game.duration}</span> Months to
             Play
           </p>
