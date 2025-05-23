@@ -9,7 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Clock10 } from 'lucide-react';
 
-const GameLists = async ({ searchParams }: { searchParams: { sort?: string; search?: string } }) => {
+const GameLists = async ({ searchParams }: { searchParams: Promise<{sort: string, search : string}>}) => {
   const gameLists = await fetchGameLists();
   let game_count = 0
   let { games } = gameLists;
