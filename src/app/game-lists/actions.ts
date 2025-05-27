@@ -1,10 +1,9 @@
 'use server'
-
 import { IGameListResponse } from "@/types";
-import axios from "axios"
+import axios from "axios";
 import { cookies } from "next/headers";
-import { STEAM_ID_COOKIE } from "../lib/constant";
 import { decrypt } from "../action";
+import { STEAM_ID_COOKIE } from "../lib/constant";
 
 export const fetchGameLists = async() => {
     const cookiesStore = await cookies();

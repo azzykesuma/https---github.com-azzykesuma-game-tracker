@@ -12,7 +12,6 @@ const RecentlyPlayed = async () => {
   return (
     <InnerLayout>
       <div className="max-w-6xl mx-auto p-6 sm:p-8 md:p-10 lg:p-12">
-        {/* Page Title */}
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white mb-8 sm:mb-10 md:mb-12">
           Recently Played Games
         </h1>
@@ -35,7 +34,6 @@ const RecentlyPlayed = async () => {
                            transform transition-transform duration-200 hover:scale-[1.02] hover:shadow-2xl
                            flex flex-col items-center text-center p-4"
               >
-                {/* Game Icon */}
                 <div className="w-20 h-20 relative rounded-md overflow-hidden mb-4 flex-shrink-0 border border-gray-600">
                   <Image
                     src={`http://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg`}

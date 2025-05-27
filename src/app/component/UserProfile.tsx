@@ -68,18 +68,17 @@ const UserProfile = () => {
             onAnimationComplete={() => setCompleteAnimation(true)}
             className="relative w-48 h-48 rounded-full overflow-hidden bg-gray-700 shadow-xl flex items-center justify-center"
           >
-            <Image
-              alt="Steam Avatar"
-              src={
-                avatarData?.image_small
-                  ? `http://media.steampowered.com/steamcommunity/public/images/${avatarData.image_small}`
-                  : "/placeholder-avatar.png"
-              }
-              width={150}
-              height={150}
-              priority
-              className="rounded-full"
-            />
+
+            {avatarData?.image_small && (
+              <Image
+                alt="Steam Avatar"
+                src={`http://media.steampowered.com/steamcommunity/public/images/${avatarData.image_small}`}
+                width={200}
+                height={200}
+                priority
+                className="absolute inset-0 rounded-full z-0"
+              />
+            )}
 
             {avatarFrame?.image_small && (
               <Image
@@ -88,7 +87,7 @@ const UserProfile = () => {
                 width={200}
                 height={200}
                 priority
-                className="absolute inset-0 rounded-full z-10" // Position over the avatar with z-index
+                className="absolute inset-0 rounded-full z-10"
               />
             )}
           </m.div>
