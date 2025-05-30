@@ -9,8 +9,8 @@ import { Suspense } from 'react';
 
 const GameLists = async ({ searchParams }: { searchParams: Promise<{sort: string, search : string}>}) => {
   const gameLists = await fetchGameLists();
-  let game_count = 0
   let { games } = gameLists;
+  const totalApiGameCount = gameLists.game_count; // Total games from API
   const ALLMINUTESPLAYTIME = games.map(item => item.playtime_forever).reduce((a, b) => a + b, 0);
 
   const resolvedSearchParams = await Promise.resolve(searchParams);
@@ -27,7 +27,7 @@ const GameLists = async ({ searchParams }: { searchParams: Promise<{sort: string
   }
 
   games = filteredGames;
-  game_count = games.length;
+  const displayedGameCount = games.length; // Count of games after filtering
 
 
   if (sortBy === 'playtime_desc') {
@@ -45,7 +45,12 @@ const GameLists = async ({ searchParams }: { searchParams: Promise<{sort: string
         </h1>
         <p className="text-lg sm:text-xl text-gray-300 mb-2">
           Total games in your collection:{" "}
-          <span className="font-semibold text-white">{game_count}</span>
+          <span className="font-semibold text-white">{totalApiGameCount}</span>
+        </p>
+        <p className="text-base sm:text-lg text-gray-400 mb-6">
+          Displaying:{" "}
+          <span className="font-semibold text-white">{displayedGameCount}</span>
+          {searchQuery && ` (filtered by "${searchQuery}")`}
         </p>
         <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-red-400 leading-relaxed">
           TOTAL PLAYTIME:{" "}
